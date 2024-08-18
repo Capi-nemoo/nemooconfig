@@ -138,39 +138,59 @@ elif [[ $option == "2" ]]; then
   else
     echo "Short description of packages:"
     echo "
-    - firefox: Popular and secure web browser.
-    - kitty: Fast and customizable terminal emulator.
-    - neovim: Advanced text editor based on Vim.
-    - fastfetch: Fast tool to display system information.
-    - yay: AUR helper to install packages from Arch User Repository.
-    - fzf: Fast search tool for the terminal.
-    - feh: Lightweight image viewer for the terminal.
-    - rofi: Application launcher and window switcher.
-    - vlc: Versatile multimedia player.
-    - discord: Communication platform for communities.
-    - polybar: Customizable status bar for window managers.
-    - picom: Window compositor for effects like shadows and transparency.
-    - arandr: Graphical tool to configure monitors.
-    - wine: Runs Windows applications on Linux.
-    - keepassxc: Secure password manager.
-    - exa: Modern replacement for 'ls' with colors and more features.
-    - steam: Video game distribution platform.
-    - dolphin: File manager for KDE.
-    - timeshift: System backup and restore tool.
-    - obs-studio: Video recording and streaming software.
-    - tor: Browser for anonymous browsing.
-    - bat: Enhanced replacement for 'cat' with syntax highlighting.
-    - qbittorrent: BitTorrent client with graphical interface.
-    - hyperfine: Command execution time benchmarking.
-    - taskwarrior: Command-line based task manager.
-    - nitrogen: Tool to set wallpapers.
-    - obsidian (AUR): Markdown-based note-taking application.
-    - factorio (AUR): Construction and resource management game.
-    - youtube-dl (AUR): Video downloader for YouTube and other sites.
-    - barrier (AUR): Share keyboard and mouse between multiple PCs.
-    - zsh: Advanced and customizable shell.
-    - oh-my-zsh (AUR): Framework to manage zsh configurations.
-    - lvim (AUR): Custom and extended version of Neovim.
+    # Navegadores Web
+      - firefox: Popular and secure web browser.
+      - tor: Browser for anonymous browsing.
+
+    # Emuladores de Terminal y Shell
+      - kitty: Fast and customizable terminal emulator.
+      - zsh: Advanced and customizable shell.
+      - oh-my-zsh (AUR): Framework to manage zsh configurations.
+
+    # Editores de Texto y Notas
+      - neovim: Advanced text editor based on Vim.
+      - lvim (AUR): Custom and extended version of Neovim.
+      - obsidian (AUR): Markdown-based note-taking application.
+
+    # Herramientas del Sistema
+      - fastfetch: Fast tool to display system information.
+      - yay: AUR helper to install packages from Arch User Repository.
+      - fzf: Fast search tool for the terminal.
+      - arandr: Graphical tool to configure monitors.
+      - timeshift: System backup and restore tool.
+      - hyperfine: Command execution time benchmarking.
+      - taskwarrior: Command-line based task manager.
+      - exa: Modern replacement for 'ls' with colors and more features.
+      - bat: Enhanced replacement for 'cat' with syntax highlighting.
+
+    # Multimedia
+      - vlc: Versatile multimedia player.
+      - obs-studio: Video recording and streaming software.
+      - youtube-dl (AUR): Video downloader for YouTube and other sites.
+      - factorio (AUR): Construction and resource management game.
+      - steam: Video game distribution platform.
+
+    # Compositores y Gestores de Ventanas
+      - rofi: Application launcher and window switcher.
+      - polybar: Customizable status bar for window managers.
+      - picom: Window compositor for effects like shadows and transparency.
+
+    # Gestores de Contraseñas y Seguridad
+      - keepassxc: Secure password manager.
+
+    # Herramientas de Imagen
+      - feh: Lightweight image viewer for the terminal.
+      - nitrogen: Tool to set wallpapers.
+
+    # Utilidades de Red
+      - qbittorrent: BitTorrent client with graphical interface.
+      - barrier (AUR): Share keyboard and mouse between multiple PCs.
+      - discord: Communication platform for communities.
+
+    # Administradores de Archivos y Compatibilidad
+      - dolphin: File manager for KDE.
+      - wine: Runs Windows applications on Linux.
+    
     "
   fi
 fi
