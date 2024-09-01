@@ -243,10 +243,10 @@ if [[ $confirm == "s" || $confirm == "S" || $confirm == "y" || $confirm == "Y" ]
     oh-my-zsh \
     lvim \
     taskwarrior
-    		
 
   # Configurar zsh como shell predeterminada / Set zsh as the default shell
-  chsh -s $(which zsh)
+  #chsh -s $(which zsh)
+  #crregir cshsh no se que pasa pero no unciona bien
 
   if [[ $lang == "es" ]]; then
     echo "¡Instalación completada con éxito!"
