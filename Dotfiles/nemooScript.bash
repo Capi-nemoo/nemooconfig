@@ -54,7 +54,7 @@ else
   echo -e "2) View short description of packages"
   read -p "Choose an option (1/2): " option
 fi
-
+#dsadsawdj:
 # Mostrar lista de paquetes o descripciones según la opción seleccionada
 if [[ $option == "1" ]]; then
   if [[ $lang == "es" ]]; then
