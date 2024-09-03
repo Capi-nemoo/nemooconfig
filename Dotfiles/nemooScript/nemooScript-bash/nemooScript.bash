@@ -47,12 +47,12 @@ if [[ $lang == "es" ]]; then
   echo -e "Opciones:"
   echo -e "1) Ver lista de paquetes"
   echo -e "2) Ver descripción corta de los paquetes"
-  read -p "Elige una opción (1/2): " option
+  read -p "Elige una opción [1]/[2]: " option
 else
   echo -e "Options:"
   echo -e "1) View package list"
   echo -e "2) View short description of packages"
-  read -p "Choose an option (1/2): " option
+  read -p "Choose an option [1]/[2]: " option
 fi
 
 # Mostrar lista de paquetes o descripciones según la opción seleccionada
@@ -261,4 +261,16 @@ else
   fi
 fi
 
-#
+#ahora mis dotfiles 
+
+if [[ $lang == "es" ]]; then
+  read -p "Desea instalar la capiConfig? [y/n]" opt
+    if [[ $opt == y ]]; then
+      command # hacer funcion con la logica para de alguna manera solamente descargar mi configuracion
+    fi
+else 
+  read -p "Would you like to install tha capiConfig? [y/n]" opt  
+    if [[ $opt == y ]]; then
+      command ... #hacer funcion con la logica para descargar el repositorio de github
+    fi
+fi
