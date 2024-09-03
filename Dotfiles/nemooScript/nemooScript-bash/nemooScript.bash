@@ -266,7 +266,11 @@ fi
 if [[ $lang == "es" ]]; then
   read -p "Desea instalar la capiConfig? [y/n]" opt
     if [[ $opt == y ]]; then
-      command # hacer funcion con la logica para de alguna manera solamente descargar mi configuracion
+      read -p "Ya tienes los archivos de capiConfig? [y/n]" opt 
+      # aqui hacer algun script para poder buscar los archivos necesarios para hacer la capiConfig
+      # luego imprimir la lista de archivos encontrados, los archivos no encontrados tendran que en
+      # listarse en otra lista y preuntas si desea proceser sin esas configuraciones
+    
     fi
 else 
   read -p "Would you like to install tha capiConfig? [y/n]" opt  
@@ -274,3 +278,13 @@ else
       command ... #hacer funcion con la logica para descargar el repositorio de github
     fi
 fi
+
+
+
+STR="zsh"
+
+
+buscandoFunc ()
+{
+ command 
+}
