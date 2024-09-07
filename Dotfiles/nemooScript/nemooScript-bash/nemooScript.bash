@@ -7,7 +7,6 @@ YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 INDIGO='\033[0;35m'
-VIOLET='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Mostrar "NEMOO" en colores de arcoíris
@@ -286,5 +285,6 @@ STR="zsh"
 
 buscandoFunc ()
 {
- command 
+ find ~/.zshrc | echo 
+ 
 }
