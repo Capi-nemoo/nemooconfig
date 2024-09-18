@@ -96,11 +96,16 @@ if [[ "$lang" == "es" ]]; then
   msg_proceeding_installation="Procediendo con la instalación..."
   PROMPT_PACKAGES_AVAILABLE="Paquetes disponibles:"
 PROMPT_REMOVE_PACKAGE="¿Deseas eliminar algún paquete? : "
-PROMPT_ENTER_PACKAGE="Escribe el nombre del paquete que deseas eliminar: "
+PROMPT_ENTER_PACKAGE="Escribe el nombre de todos los paquetes que deseas eliminar, una vez que presiones enter los paquetes restantes se instalarán"
 PROMPT_PACKAGE_REMOVED="%s ha sido eliminado del listado."
 PROMPT_PACKAGE_NOT_FOUND="El paquete '%s' no está en la lista."
 PROMPT_PACKAGES_REMAINING="Paquetes restantes:"
+confirm_remaining="¿Deseas ver los paquetes restantes? [1 = y]: "
 PROMPT_NO_PACKAGE_REMOVED="No se ha eliminado ningún paquete."
+Want_UPGRADE="¿Quieres actualizar el sistema? [y/n]: "
+itsinstalled="ya está instalado"
+installing="Instalando"
+
   # Descripciones de paquetes en Español
   declare -A package_descriptions=(
     ["firefox"]="Navegador web popular y seguro."
@@ -170,6 +175,7 @@ else
   msg_symlink_created="Created symlink: %s -> %s"
   msg_dotfiles_complete="Dotfiles installation and symlinks setup complete! 🎉"
   msg_invalid_option="error4"
+  confirm_remaining="Do you want to see the remaining packages? [1 = y]: "
     msg_package_already_listed="The package '%s' is already in the installation list."
   msg_enter_description="Enter a description for the package:"
     msg_updating_system="Updating the system..."
@@ -178,12 +184,14 @@ else
   msg_proceeding_installation="Proceeding with installation..."
   PROMPT_PACKAGES_AVAILABLE="Available packages:"
 PROMPT_REMOVE_PACKAGE="Do you want to remove any package? [y/n] "
-PROMPT_ENTER_PACKAGE="Enter the name of the package you want to remove: "
+PROMPT_ENTER_PACKAGE="Enter the name of ALL the packages you want to remove, once you press enter the remaining packages will install"
 PROMPT_PACKAGE_REMOVED="%s has been removed from the list."
 PROMPT_PACKAGE_NOT_FOUND="The package '%s' is not in the list."
 PROMPT_PACKAGES_REMAINING="Remaining packages:"
 PROMPT_NO_PACKAGE_REMOVED="No package has been removed."
-
+Want_UPGRADE="Do you want to upgrade the system? [y/n]"
+itsinstalled="is already installed"
+installing="Installing"
 
   # Package descriptions in English
   declare -A package_descriptions=(
@@ -257,16 +265,19 @@ packages=(
 
 
 # Actualizar el sistema
-echo "$msg_updating_system"
-sudo pacman -Syu --noconfirm
+read -p "$Want_UPGRADE" siono
+if [[ "$siono" =~ ^(y|yes|s|si|1)$ ]]; then
+  echo "$msg_updating_system"
+  sudo pacman -Syu --noconfirm
+fi
 
 # Función para instalar paquetes
 install_packages() {
   for package in "${packages[@]}"; do
     if pacman -Qi $package &> /dev/null; then
-      echo "$package ya está instalado."
+      echo "$package $itsinstalled"
     else
-      echo "Instalando $package..."
+      echo "$installing $package..."
       if pacman -Ss $package &> /dev/null; then
         sudo pacman -S --noconfirm $package
       else
@@ -276,38 +287,62 @@ install_packages() {
   done
 }
 
-remove_package() {
-  
-  # Preguntar si el usuario quiere eliminar algún paquete
+remove_packages() {
+  # Preguntar si el usuario quiere eliminar paquetes
   read -p "$PROMPT_REMOVE_PACKAGE" confirm
-  if [[ "$confirm" =~ ^(y|yes|s|si|1)$ ]]; then
-    # Pedir el nombre del paquete a eliminar
-    read -p "$PROMPT_ENTER_PACKAGE" package_to_remove
-    new_packages=()
-    found=0
+  if [[ "$confirm" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
+    # Pedir los nombres de los paquetes a eliminar, separados por espacios
+    read -p "$PROMPT_ENTER_PACKAGE" packages_to_remove_input
     
-    for package in "${packages[@]}"; do
-      if [[ "$package" != "$package_to_remove" ]]; then
-        new_packages+=("$package")
+    # Convertir la entrada en un array
+    IFS=' ' read -r -a packages_to_remove <<< "$packages_to_remove_input"
+    
+    # Inicializar arrays para rastrear eliminaciones y no encontrados
+    removed_packages=()
+    not_found_packages=()
+    
+    # Iterar sobre cada paquete a eliminar
+    for package in "${packages_to_remove[@]}"; do
+      if [[ " ${packages[@]} " =~ " ${package} " ]]; then
+        removed_packages+=("$package")
       else
-        found=1
-        printf "$PROMPT_PACKAGE_REMOVED\n" "$package_to_remove"
+        not_found_packages+=("$package")
       fi
     done
-
-    if [[ $found -eq 0 ]]; then
-      printf "$PROMPT_PACKAGE_NOT_FOUND\n" "$package_to_remove"
-    fi
-
-    # Actualizar el array con los nuevos valores
+    
+    # Crear un nuevo array excluyendo los paquetes eliminados
+    new_packages=()
+    for package in "${packages[@]}"; do
+      if [[ ! " ${removed_packages[@]} " =~ " ${package} " ]]; then
+        new_packages+=("$package")
+      fi
+    done
+    
+    # Actualizar el array original con los paquetes restantes
     packages=("${new_packages[@]}")
     
-    # Mostrar los paquetes restantes
-    echo "$PROMPT_PACKAGES_REMAINING ${packages[@]}"
+    # Informar al usuario sobre los paquetes eliminados
+    if [ ${#removed_packages[@]} -gt 0 ]; then
+      printf "$PROMPT_PACKAGE_REMOVED\n" "${removed_packages[@]}"
+    fi
+    
+    # Informar al usuario sobre los paquetes no encontrados
+    if [ ${#not_found_packages[@]} -gt 0 ]; then
+      printf "$PROMPT_PACKAGE_NOT_FOUND\n" "${not_found_packages[@]}"
+    fi
+    
+    # Preguntar si desea ver los paquetes restantes
+    read -p "$PROMPT_PACKAGES_REMAINING [y/n]: " confirm_remaining
+   
+    if [[ "$confirm_remaining" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
+      echo "$PROMPT_PACKAGES_REMAINING ${packages[@]}"
+    fi
+    
   else
     echo "$PROMPT_NO_PACKAGE_REMOVED"
   fi
 }
+
 
 
 # Preguntar si desea ver la lista de paquetes o una descripción antes de instalar
@@ -317,7 +352,7 @@ echo -e "$msg_option2"
 read -p "$msg_choose_option" option
 
 # Mostrar lista de paquetes o descripciones según la opción seleccionada
-if [[ $option =~ ^(y|yes|s|si|1)$ ]]; then
+if [[ $option =~ ^(Y|y|yes|s|S|si|1)$ ]]; then
   echo "$msg_packages_list"
   for pkg in "${packages[@]}"; do
     echo "- $pkg"
@@ -330,9 +365,9 @@ else
   done
 fi
 
-
-# Llamar a la función
+# Llamar a la fun ción
 remove_package
+
 # Llamar a la función
 install_packages
 
@@ -369,9 +404,8 @@ custom_packages=()
 
 # Preguntar si el usuario desea agregar más paquetes
 read -p "$msg_add_packages" add_more
-add_more=${add_more,,} # Convierte a minúsculas
 
-if [[ "$add_more" =~ ^(y|yes|s|si|1)$ ]]; then
+if [[ "$add_more" =~ ^(Y|y|yes|s|S|si|1)$ ]]; then
   while true; do
     # Pedir el nombre del paquete
     read -p "$msg_enter_package" package_name
@@ -395,7 +429,7 @@ if [[ "$add_more" =~ ^(y|yes|s|si|1)$ ]]; then
     # Preguntar si desea agregar otro paquete
     read -p "$msg_add_another" add_another
     add_another=${add_another,,} # Convierte a minúsculas
-    if [[ ! "$add_another" =~ ^(y|yes|s|si|1)$ ]]; then
+    if [[ ! "$add_another" =~ ^(y|Y|yes|s|S|si|1)$ ]]; then
       echo "$msg_no_additional_packages"
       break
     fi
