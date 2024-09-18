@@ -74,7 +74,7 @@ if [[ "$lang" == "es" ]]; then
   msg_enter_package="Ingresa el nombre del paquete que quieres agregar: "
   msg_package_exists="El paquete '%s' existe y será instalado."
   msg_package_not_found="El paquete '%s' no existe en los repositorios."
-  msg_add_another="¿Deseas agregar otro paquete?: "
+  msg_add_another="¿Deseas agregar otro paquete? [y/n] "
   msg_no_additional_packages="No se agregarán más paquetes."
   msg_have_dotfiles_repo="¿Tienes un repositorio Git para tus dotfiles? [1 = y]: "
   msg_enter_repo_url="Ingresa la URL de tu repositorio de dotfiles: "
@@ -95,11 +95,11 @@ if [[ "$lang" == "es" ]]; then
   msg_installing_aur_packages="Instalando paquetes desde AUR..."
   msg_proceeding_installation="Procediendo con la instalación..."
   PROMPT_PACKAGES_AVAILABLE="Paquetes disponibles:"
-PROMPT_REMOVE_PACKAGE="¿Deseas eliminar algún paquete? : "
+PROMPT_REMOVE_PACKAGE="¿Deseas eliminar algún paquete? [y/n] "
 PROMPT_ENTER_PACKAGE="Escribe el nombre de todos los paquetes que deseas eliminar, una vez que presiones enter los paquetes restantes se instalarán"
 PROMPT_PACKAGE_REMOVED="%s ha sido eliminado del listado."
 PROMPT_PACKAGE_NOT_FOUND="El paquete '%s' no está en la lista."
-PROMPT_PACKAGES_REMAINING="Paquetes restantes:"
+PROMPT_PACKAGES_REMAINING="Deseas ver los paquetes restantes? [1 = y]:"
 confirm_remaining="¿Deseas ver los paquetes restantes? [1 = y]: "
 PROMPT_NO_PACKAGE_REMOVED="No se ha eliminado ningún paquete."
 Want_UPGRADE="¿Quieres actualizar el sistema? [y/n]: "
@@ -366,7 +366,7 @@ else
 fi
 
 # Llamar a la fun ción
-remove_package
+remove_packages
 
 # Llamar a la función
 install_packages
