@@ -1,0 +1,89 @@
+---
+# Playbook para dotfiles personales
+
+# Configuración del inventario
+- hosts: localhost
+  become: true
+  vars:
+    home_dir: "{{ lookup('env', 'HOME') }}"
+    git_user: "mi-usuario-github"
+    dotfiles_repo: "https://github.com/mi-usuario-github/dotfiles"
+    dotfiles_dir: "{{ home_dir }}/dotfiles"
+    packages:
+      - vim
+      - zsh
+      - git
+      - tmux
+      - htop
+      - curl
+      - wget
+
+  tasks:
+
+  - name: Clonar el repositorio de dotfiles
+    git:
+      repo: "{{ dotfiles_repo }}"
+      dest: "{{ dotfiles_dir }}"
+      version: master
+    when: not exists (dotfiles_dir)
+
+  - name: Instalar paquetes esenciales
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ packages }}"
+  
+  - name: Instalar Oh My Zsh
+    shell: |
+      sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    args:
+      creates: "{{ home_dir }}/.oh-my-zsh"
+
+  - name: Copiar dotfiles a home
+    copy:
+      src: "{{ dotfiles_dir }}/.vimrc"
+      dest: "{{ home_dir }}/.vimrc"
+      owner: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: Configurar Zsh como shell predeterminada
+    shell: chsh -s $(which zsh) "{{ ansible_user_id }}"
+
+  - name: Crear symlinks para dotfiles
+    file:
+      src: "{{ dotfiles_dir }}/{{ item }}"
+      dest: "{{ home_dir }}/{{ item }}"
+      state: link
+    loop:
+      - .zshrc
+      - .gitconfig
+      - .tmux.conf
+      - .vimrc
+
+  - name: Instalar plugins de Vim (Vundle)
+    git:
+      repo: "https://github.com/VundleVim/Vundle.vim.git"
+      dest: "{{ home_dir }}/.vim/bundle/Vundle.vim"
+
+  - name: Crear directorios de trabajo
+    file:
+      path: "{{ home_dir }}/workspace"
+      state: directory
+
+  - name: Cambiar permisos del directorio workspace
+    file:
+      path: "{{ home_dir }}/workspace"
+      owner: "{{ ansible_user_id }}"
+      mode: 0755
+
+  - name: Instalar Powerlevel10k para Zsh
+    git:
+      repo: "https://github.com/romkatv/powerlevel10k.git"
+      dest: "{{ home_dir }}/.oh-my-zsh/custom/themes/powerlevel10k"
+
+  - name: Actualizar el sistema
+    apt:
+      update_cache: yes
+      upgrade: dist
+      cache_valid_time: 3600
+
