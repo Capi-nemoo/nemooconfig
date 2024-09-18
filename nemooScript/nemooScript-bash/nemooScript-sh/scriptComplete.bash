@@ -146,23 +146,23 @@ else
   msg_options="Options:"
   msg_option1="1) View package list"
   msg_option2="2) View short description of packages"
-  msg_choose_option="Choose an option: "
+  msg_choose_option="Choose an option: [1/2]"
   msg_packages_list="The following packages will be installed:"
   msg_packages_description="Package descriptions:"
-  msg_proceed_install="Do you want to proceed with the installation?: "
+  msg_proceed_install="Do you want to proceed with the installation?: [y/n]"
   msg_installation_cancelled="Installation cancelled."
   msg_installation_complete="Installation completed successfully!"
-  msg_add_packages="Do you want to add more packages to the installation?: "
+  msg_add_packages="Do you want to add more packages to the installation?: [y/n] "
   msg_enter_package="Enter the package name you want to add: "
   msg_package_exists="The package '%s' exists and will be installed."
   msg_package_not_found="The package '%s' does not exist in the repositories."
-  msg_add_another="Do you want to add another package? "
+  msg_add_another="Do you want to add another package? [y/n] "
   msg_no_additional_packages="No additional packages will be added."
-  msg_have_dotfiles_repo="Do you have a Git repository for your dotfiles?"
+  msg_have_dotfiles_repo="Do you have a Git repository for your dotfiles? [y/n]"
   msg_enter_repo_url="Enter your dotfiles repository URL: "
   msg_clone_location="Where do you want to clone your dotfiles? (default is ~/dotfiles): "
   msg_directory_exists="Directory %s already exists."
-  msg_delete_and_reclone="Do you want to delete and re-clone it?: "
+  msg_delete_and_reclone="Do you want to delete and re-clone it? [y/n] "
   msg_skipping_clone="Skipping clone. Using the existing directory."
   msg_cloning_dotfiles="Cloning dotfiles into %s."
   msg_creating_symlinks="Creating symlinks for dotfiles..."
@@ -177,7 +177,7 @@ else
   msg_installing_aur_packages="Installing packages from AUR..."
   msg_proceeding_installation="Proceeding with installation..."
   PROMPT_PACKAGES_AVAILABLE="Available packages:"
-PROMPT_REMOVE_PACKAGE="Do you want to remove any package?: "
+PROMPT_REMOVE_PACKAGE="Do you want to remove any package? [y/n] "
 PROMPT_ENTER_PACKAGE="Enter the name of the package you want to remove: "
 PROMPT_PACKAGE_REMOVED="%s has been removed from the list."
 PROMPT_PACKAGE_NOT_FOUND="The package '%s' is not in the list."
@@ -256,39 +256,6 @@ packages=(
 )
 
 
-# Definir los paquetes
-packages=(
-  "firefox"
-  "kitty"
-  "neovim"
-  "fastfetch"
-  "yay"
-  "fzf"
-  "feh"
-  "rofi"
-  "vlc"
-  "discord"
-  "polybar"
-  "picom"
-  "arandr"
-  "wine"
-  "keepassxc"
-  "exa"
-  "steam"
-  "dolphin"
-  "timeshift"
-  "obs-studio"
-  "tor"
-  "bat"
-  "qbittorrent"
-  "hyperfine"
-  "task"
-  "nitrogen"
-  "obsidian"
-  "factorio"
-  "barrier"
-  "zsh"
-)
 # Actualizar el sistema
 echo "$msg_updating_system"
 sudo pacman -Syu --noconfirm
@@ -310,8 +277,6 @@ install_packages() {
 }
 
 remove_package() {
-  # Mostrar los paquetes actuales
-  echo "$PROMPT_PACKAGES_AVAILABLE ${packages[@]}"
   
   # Preguntar si el usuario quiere eliminar algún paquete
   read -p "$PROMPT_REMOVE_PACKAGE" confirm
