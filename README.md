@@ -1,38 +1,30 @@
-### ¡Hola Mundo!
+# Dotfiles Automation
 
-Esta es una breve introducción a este pequeño pero interesante proyecto.
+This repo is just for automating my personal system setup. If you're here looking for a guide or tutorial, you're in the wrong place. I use **Ansible**, **Rust**bash, and other tools to handle my environment across multiple machines, but this isn't meant for anyone but me.
 
-#### Objetivo a corto plazo
+## Tools
 
-Poder instalar todas mis configuraciones mediante un TUI (Terminal User Interface).
+- **Ansible**: Handles installation of my dotfiles and packages.
+- **Rust**: Some small custom utilities I wrote in Rust for fun.
+- **Bash scripts**: Miscellaneous scripts for system tweaks.
+- **QMK**: My custom keyboard firmware setup.
 
-#### Objetivo a largo plazo
+## Installation
 
-Crear un programa para generar tus propios dotfiles (archivos de configuración) fácilmente. Planeo lograr esto utilizando Rust, y la característica más importante será que también podrás crear tu propio script de instalación.
+If you really want to, you can run this on your system, but I don't recommend it. You'll probably need to adjust a bunch of things to fit your setup.
 
-#### Objetivos Generales
+```bash
 
-* Extraer tus dotfiles de su ubicación predeterminada y almacenarlos en una carpeta para poder subirlos a Git fácilmente.
-* Crear symlinks (enlaces simbólicos) por cada archivo que se maneje.
-* Debe lucir y funcionar con las teclas de Vim.
-* Instalar una lista de paquetes:
-  * Preguntar si los quieres todos o solo algunos.
-    * ¿Sí? Entonces descarga todo y muestra un mensaje cuando termine de instalarlos.
-    * ¿No? Entonces preguntar si:
-      * Ver la lista y excluir paquetes.
-      * Ver la lista e incluir paquetes.
+ansible-playbook -i inventory.yml playbook.yml --ask-become-pass
+```
 
-#### Integración con Netboot.xyz
+## What It Does
 
-Netboot.xyz es una herramienta que permite iniciar e instalar sistemas operativos directamente desde la red, utilizando PXE (Preboot Execution Environment). En este proyecto, planeo integrar Netboot.xyz para ofrecer una opción de arranque desde la red, que permitirá:
+- Installs my dotfiles from GitHub.
+- Sets up a bunch of random stuff like **zsh**, **Vim**, and my **Rust** utilities.
+- Configures some tools like **QMK** for my keyboard firmware.
+- Updates and upgrades everything without asking questions.
 
-* Iniciar el sistema directamente desde Netboot.xyz.
-* Acceder a un menú personalizado que te permitirá seleccionar la instalación de tus dotfiles junto con el sistema operativo de tu elección.
-* Automatizar la instalación de sistemas operativos y configuraciones personalizadas en máquinas nuevas sin necesidad de medios físicos.
+## Warning
 
-Esta integración facilitará la instalación y configuración de tus sistemas desde cualquier lugar con acceso a la red, haciendo el proceso mucho más eficiente y flexible.
-
-#### Notas adicionales
-
-Este proyecto también incluirá una configuración personalizada para Netboot.xyz que permitirá cargar directamente tus dotfiles y configuraciones específicas después de la instalación del sistema operativo.
-
+This is built for **my** setup. If you try to use it as-is, it might break something on your end. Feel free to explore it, but don’t expect it to work out of the box.
