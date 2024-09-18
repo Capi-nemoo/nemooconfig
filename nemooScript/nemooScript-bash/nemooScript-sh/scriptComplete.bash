@@ -244,40 +244,6 @@ packages=(
   "lvim"
 )
 
-# colors.sh
-RED='\033[0;31m'
-ORANGE='\033[0;33m'
-YELLOW='\033[1;33m'
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-INDIGO='\033[0;35m'
-VIOLET='\033[0;35m'
-NC='\033[0m' # No Color
-
-
-# banner.sh
-# Mostrar "NEMOO" en colores de arcoíris
-echo -e "
-${RED} _   _  ${ORANGE}______ ${YELLOW}__  __ ${GREEN} ____   ${BLUE}____  
-${RED}| \ | |${ORANGE}|  ____|${YELLOW}  \/  |${GREEN}/ __ \ ${BLUE}/ __ \ 
-${RED}|  \| |${ORANGE}| |__  ${YELLOW}| \  / |${GREEN}| | | |${BLUE}| | | |
-${RED}| . \ |${ORANGE}|  __| ${YELLOW}| |\/| |${GREEN}| | | |${BLUE}| | | |
-${RED}| |\  |${ORANGE}| |____${YELLOW}| |  | |${GREEN}| |_| |${BLUE}| |_| |
-${RED}|_| \_|${ORANGE}|______${YELLOW}|_|  |_|${GREEN}\____/ ${BLUE}\____/ 
-${NC}
-"
-# links.sh
-# Mostrar enlaces a GitHub y YouTube
-echo -e "
-\e[94mGitHub: https://github.com/Capi-nemoo\e[0m
-"
-echo -e "
-\e[91mYouTube: https://www.youtube.com/@capi_nemoo\e[0m\n
-"
-
-
-echo -e "$msg_welcome"
-
 
 # Preguntar si desea ver la lista de paquetes o una descripción antes de instalar
 echo -e "$msg_options"
