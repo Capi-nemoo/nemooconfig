@@ -64,23 +64,23 @@ if [[ "$lang" == "es" ]]; then
   msg_options="Opciones:"
   msg_option1="1) Ver lista de paquetes"
   msg_option2="2) Ver descripción corta de los paquetes"
-  msg_choose_option="Elige una opción (1/2): "
+  msg_choose_option="Elige una opción: "
   msg_packages_list="Los siguientes paquetes se instalarán:"
   $msg_packages_description="Descripciones de paquetes:"
   msg_proceed_install="¿Quieres proceder con la instalación?: "
   msg_installation_cancelled="Instalación cancelada."
   msg_installation_complete="¡Instalación completada con éxito!"
-  msg_add_packages="¿Deseas agregar más paquetes a la instalación? [1 = y]: "
+  msg_add_packages="¿Deseas agregar más paquetes a la instalación?: "
   msg_enter_package="Ingresa el nombre del paquete que quieres agregar: "
   msg_package_exists="El paquete '%s' existe y será instalado."
   msg_package_not_found="El paquete '%s' no existe en los repositorios."
-  msg_add_another="¿Deseas agregar otro paquete? [1 = y]: "
+  msg_add_another="¿Deseas agregar otro paquete?: "
   msg_no_additional_packages="No se agregarán más paquetes."
   msg_have_dotfiles_repo="¿Tienes un repositorio Git para tus dotfiles? [1 = y]: "
   msg_enter_repo_url="Ingresa la URL de tu repositorio de dotfiles: "
   msg_clone_location="¿Dónde deseas clonar tus dotfiles? (por defecto es ~/dotfiles): "
   msg_directory_exists="El directorio %s ya existe."
-  msg_delete_and_reclone="¿Deseas eliminarlo y volver a clonarlo? [1 = y]: "
+  msg_delete_and_reclone="¿Deseas eliminarlo y volver a clonarlo? : "
   msg_skipping_clone="Saltando clonación. Usando el directorio existente."
   msg_cloning_dotfiles="Clonando dotfiles en %s."
   msg_creating_symlinks="Creando enlaces simbólicos para los dotfiles..."
@@ -94,6 +94,13 @@ if [[ "$lang" == "es" ]]; then
   msg_installing_official_packages="Instalando paquetes desde los repositorios oficiales..."
   msg_installing_aur_packages="Instalando paquetes desde AUR..."
   msg_proceeding_installation="Procediendo con la instalación..."
+  PROMPT_PACKAGES_AVAILABLE="Paquetes disponibles:"
+PROMPT_REMOVE_PACKAGE="¿Deseas eliminar algún paquete? : "
+PROMPT_ENTER_PACKAGE="Escribe el nombre del paquete que deseas eliminar: "
+PROMPT_PACKAGE_REMOVED="%s ha sido eliminado del listado."
+PROMPT_PACKAGE_NOT_FOUND="El paquete '%s' no está en la lista."
+PROMPT_PACKAGES_REMAINING="Paquetes restantes:"
+PROMPT_NO_PACKAGE_REMOVED="No se ha eliminado ningún paquete."
   # Descripciones de paquetes en Español
   declare -A package_descriptions=(
     ["firefox"]="Navegador web popular y seguro."
@@ -169,6 +176,14 @@ else
   msg_installing_official_packages="Installing packages from official repositories..."
   msg_installing_aur_packages="Installing packages from AUR..."
   msg_proceeding_installation="Proceeding with installation..."
+  PROMPT_PACKAGES_AVAILABLE="Available packages:"
+PROMPT_REMOVE_PACKAGE="Do you want to remove any package?: "
+PROMPT_ENTER_PACKAGE="Enter the name of the package you want to remove: "
+PROMPT_PACKAGE_REMOVED="%s has been removed from the list."
+PROMPT_PACKAGE_NOT_FOUND="The package '%s' is not in the list."
+PROMPT_PACKAGES_REMAINING="Remaining packages:"
+PROMPT_NO_PACKAGE_REMOVED="No package has been removed."
+
 
   # Package descriptions in English
   declare -A package_descriptions=(
@@ -233,16 +248,101 @@ packages=(
   "bat"
   "qbittorrent"
   "hyperfine"
-  "taskwarrior"
+  "task"
+  "nitrogen"
+  "obsidian"
+  "barrier"
+  "zsh"
+)
+
+
+# Definir los paquetes
+packages=(
+  "firefox"
+  "kitty"
+  "neovim"
+  "fastfetch"
+  "yay"
+  "fzf"
+  "feh"
+  "rofi"
+  "vlc"
+  "discord"
+  "polybar"
+  "picom"
+  "arandr"
+  "wine"
+  "keepassxc"
+  "exa"
+  "steam"
+  "dolphin"
+  "timeshift"
+  "obs-studio"
+  "tor"
+  "bat"
+  "qbittorrent"
+  "hyperfine"
+  "task"
   "nitrogen"
   "obsidian"
   "factorio"
-  "youtube-dl"
   "barrier"
   "zsh"
-  "oh-my-zsh"
-  "lvim"
 )
+# Actualizar el sistema
+echo "$msg_updating_system"
+sudo pacman -Syu --noconfirm
+
+# Función para instalar paquetes
+install_packages() {
+  for package in "${packages[@]}"; do
+    if pacman -Qi $package &> /dev/null; then
+      echo "$package ya está instalado."
+    else
+      echo "Instalando $package..."
+      if pacman -Ss $package &> /dev/null; then
+        sudo pacman -S --noconfirm $package
+      else
+        yay -S --noconfirm $package
+      fi
+    fi
+  done
+}
+
+remove_package() {
+  # Mostrar los paquetes actuales
+  echo "$PROMPT_PACKAGES_AVAILABLE ${packages[@]}"
+  
+  # Preguntar si el usuario quiere eliminar algún paquete
+  read -p "$PROMPT_REMOVE_PACKAGE" confirm
+  if [[ "$confirm" =~ ^(y|yes|s|si|1)$ ]]; then
+    # Pedir el nombre del paquete a eliminar
+    read -p "$PROMPT_ENTER_PACKAGE" package_to_remove
+    new_packages=()
+    found=0
+    
+    for package in "${packages[@]}"; do
+      if [[ "$package" != "$package_to_remove" ]]; then
+        new_packages+=("$package")
+      else
+        found=1
+        printf "$PROMPT_PACKAGE_REMOVED\n" "$package_to_remove"
+      fi
+    done
+
+    if [[ $found -eq 0 ]]; then
+      printf "$PROMPT_PACKAGE_NOT_FOUND\n" "$package_to_remove"
+    fi
+
+    # Actualizar el array con los nuevos valores
+    packages=("${new_packages[@]}")
+    
+    # Mostrar los paquetes restantes
+    echo "$PROMPT_PACKAGES_REMAINING ${packages[@]}"
+  else
+    echo "$PROMPT_NO_PACKAGE_REMOVED"
+  fi
+}
 
 
 # Preguntar si desea ver la lista de paquetes o una descripción antes de instalar
@@ -266,38 +366,41 @@ else
 fi
 
 
-# install_packages.sh
+# Llamar a la función
+remove_package
+# Llamar a la función
+install_packages
 
 # Inicializar arrays para paquetes oficiales y de AUR
 official_packages=()
 aur_packages=()
+custom_packages=()
 
+###
 # Clasificar los paquetes
-for pkg in "${packages[@]}"; do
-  if pacman -Si "$pkg" > /dev/null 2>&1; then
-    official_packages+=("$pkg")
-  elif yay -Si "$pkg" > /dev/null 2>&1; then
-    aur_packages+=("$pkg")
-  else
-    echo "⚠️  El paquete '$pkg' no se encontró en los repositorios oficiales ni en AUR."
-  fi
-done
+# for pkg in "${custom_packages[@]}"; do
+#   if pacman -Si "$pkg" > /dev/null 2>&1; then
+#     official_packages+=("$pkg")
+#   elif yay -Si "$pkg" > /dev/null 2>&1; then
+#     aur_packages+=("$pkg")
+#   else
+#     echo "⚠️  El paquete '$pkg' no se encontró en los repositorios oficiales ni en AUR."
+#   fi
+# done
+###
 
-# Actualizar el sistema
-echo "$msg_updating_system"
-sudo pacman -Syu --noconfirm
 
 # Instalar paquetes desde los repositorios oficiales
-if [ ${#official_packages[@]} -ne 0 ]; then
-  echo "$msg_installing_official_packages"
-  sudo pacman -S --noconfirm "${official_packages[@]}"
-fi
+#if [ ${#official_packages[@]} -ne 0 ]; then
+#  echo "$msg_installing_official_packages"
+#  sudo pacman -S --noconfirm "${official_packages[@]}"
+#fi
 
 # Instalar paquetes desde AUR usando yay
-if [ ${#aur_packages[@]} -ne 0 ]; then
-  echo "$msg_installing_aur_packages"
-  yay -S --noconfirm "${aur_packages[@]}"
-fi
+#if [ ${#aur_packages[@]} -ne 0 ]; then
+#  echo "$msg_installing_aur_packages"
+#  yay -S --noconfirm "${aur_packages[@]}"
+#fi
 
 # Preguntar si el usuario desea agregar más paquetes
 read -p "$msg_add_packages" add_more
