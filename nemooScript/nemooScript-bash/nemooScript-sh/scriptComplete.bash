@@ -66,26 +66,34 @@ if [[ "$lang" == "es" ]]; then
   msg_option2="2) Ver descripción corta de los paquetes"
   msg_choose_option="Elige una opción (1/2): "
   msg_packages_list="Los siguientes paquetes se instalarán:"
-  msg_proceed_install="¿Quieres proceder con la instalación? (s/n): "
+  $msg_packages_description="Descripciones de paquetes:"
+  msg_proceed_install="¿Quieres proceder con la instalación?: "
   msg_installation_cancelled="Instalación cancelada."
   msg_installation_complete="¡Instalación completada con éxito!"
-  msg_add_packages="¿Deseas agregar más paquetes a la instalación? (s/n): "
+  msg_add_packages="¿Deseas agregar más paquetes a la instalación? [1 = y]: "
   msg_enter_package="Ingresa el nombre del paquete que quieres agregar: "
   msg_package_exists="El paquete '%s' existe y será instalado."
   msg_package_not_found="El paquete '%s' no existe en los repositorios."
-  msg_add_another="¿Deseas agregar otro paquete? (s/n): "
+  msg_add_another="¿Deseas agregar otro paquete? [1 = y]: "
   msg_no_additional_packages="No se agregarán más paquetes."
-  msg_have_dotfiles_repo="¿Tienes un repositorio Git para tus dotfiles? (s/n): "
+  msg_have_dotfiles_repo="¿Tienes un repositorio Git para tus dotfiles? [1 = y]: "
   msg_enter_repo_url="Ingresa la URL de tu repositorio de dotfiles: "
   msg_clone_location="¿Dónde deseas clonar tus dotfiles? (por defecto es ~/dotfiles): "
   msg_directory_exists="El directorio %s ya existe."
-  msg_delete_and_reclone="¿Deseas eliminarlo y volver a clonarlo? (s/n): "
+  msg_delete_and_reclone="¿Deseas eliminarlo y volver a clonarlo? [1 = y]: "
   msg_skipping_clone="Saltando clonación. Usando el directorio existente."
   msg_cloning_dotfiles="Clonando dotfiles en %s."
   msg_creating_symlinks="Creando enlaces simbólicos para los dotfiles..."
   msg_backup_existing="Respaldo del archivo/directorio existente en %s"
   msg_symlink_created="Enlace simbólico creado: %s -> %s"
   msg_dotfiles_complete="¡Instalación de dotfiles y configuración de enlaces simbólicos completa! 🎉"
+  $msg_invalid_option="error4"
+    msg_package_already_listed="El paquete '%s' ya está en la lista de instalación."
+  msg_enter_description="Ingresa una descripción para el paquete:"
+    msg_updating_system="Actualizando el sistema..."
+  msg_installing_official_packages="Instalando paquetes desde los repositorios oficiales..."
+  msg_installing_aur_packages="Instalando paquetes desde AUR..."
+  msg_proceeding_installation="Procediendo con la instalación..."
   # Descripciones de paquetes en Español
   declare -A package_descriptions=(
     ["firefox"]="Navegador web popular y seguro."
@@ -131,28 +139,36 @@ else
   msg_options="Options:"
   msg_option1="1) View package list"
   msg_option2="2) View short description of packages"
-  msg_choose_option="Choose an option (1/2): "
+  msg_choose_option="Choose an option: "
   msg_packages_list="The following packages will be installed:"
-  msg_proceed_install="Do you want to proceed with the installation? (y/n): "
+  $msg_packages_description="Package descriptions:"
+  msg_proceed_install="Do you want to proceed with the installation?: "
   msg_installation_cancelled="Installation cancelled."
   msg_installation_complete="Installation completed successfully!"
-  msg_add_packages="Do you want to add more packages to the installation? (y/n): "
+  msg_add_packages="Do you want to add more packages to the installation?: "
   msg_enter_package="Enter the package name you want to add: "
   msg_package_exists="The package '%s' exists and will be installed."
   msg_package_not_found="The package '%s' does not exist in the repositories."
-  msg_add_another="Do you want to add another package? (y/n): "
+  msg_add_another="Do you want to add another package? "
   msg_no_additional_packages="No additional packages will be added."
-  msg_have_dotfiles_repo="Do you have a Git repository for your dotfiles? (y/n): "
+  msg_have_dotfiles_repo="Do you have a Git repository for your dotfiles?"
   msg_enter_repo_url="Enter your dotfiles repository URL: "
   msg_clone_location="Where do you want to clone your dotfiles? (default is ~/dotfiles): "
   msg_directory_exists="Directory %s already exists."
-  msg_delete_and_reclone="Do you want to delete and re-clone it? (y/n): "
+  msg_delete_and_reclone="Do you want to delete and re-clone it?: "
   msg_skipping_clone="Skipping clone. Using the existing directory."
   msg_cloning_dotfiles="Cloning dotfiles into %s."
   msg_creating_symlinks="Creating symlinks for dotfiles..."
   msg_backup_existing="Backup of existing file/directory at %s"
   msg_symlink_created="Created symlink: %s -> %s"
   msg_dotfiles_complete="Dotfiles installation and symlinks setup complete! 🎉"
+  $msg_invalid_option="error4"
+    msg_package_already_listed="The package '%s' is already in the installation list."
+  msg_enter_description="Enter a description for the package:"
+    msg_updating_system="Updating the system..."
+  msg_installing_official_packages="Installing packages from official repositories..."
+  msg_installing_aur_packages="Installing packages from AUR..."
+  msg_proceeding_installation="Proceeding with installation..."
 
   # Package descriptions in English
   declare -A package_descriptions=(
@@ -192,16 +208,6 @@ else
   )
 fi
 
-# links.sh
-# Mostrar enlaces a GitHub y YouTube
-echo -e "\nPara más scripts y tutoriales, visita:"
-echo -e "
-\e[94mGitHub: https://github.com/Capi-nemoo\e[0m
-"
-echo -e "
-\e[91mYouTube: https://www.youtube.com/@capi_nemoo\e[0m\n
-"
-
 packages=(
   "firefox"
   "kitty"
@@ -238,136 +244,130 @@ packages=(
   "lvim"
 )
 
+# colors.sh
+RED='\033[0;31m'
+ORANGE='\033[0;33m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+INDIGO='\033[0;35m'
+VIOLET='\033[0;35m'
+NC='\033[0m' # No Color
+
+
+# banner.sh
+# Mostrar "NEMOO" en colores de arcoíris
+echo -e "
+${RED} _   _  ${ORANGE}______ ${YELLOW}__  __ ${GREEN} ____   ${BLUE}____  
+${RED}| \ | |${ORANGE}|  ____|${YELLOW}  \/  |${GREEN}/ __ \ ${BLUE}/ __ \ 
+${RED}|  \| |${ORANGE}| |__  ${YELLOW}| \  / |${GREEN}| | | |${BLUE}| | | |
+${RED}| . \ |${ORANGE}|  __| ${YELLOW}| |\/| |${GREEN}| | | |${BLUE}| | | |
+${RED}| |\  |${ORANGE}| |____${YELLOW}| |  | |${GREEN}| |_| |${BLUE}| |_| |
+${RED}|_| \_|${ORANGE}|______${YELLOW}|_|  |_|${GREEN}\____/ ${BLUE}\____/ 
+${NC}
+"
+# links.sh
+# Mostrar enlaces a GitHub y YouTube
+echo -e "
+\e[94mGitHub: https://github.com/Capi-nemoo\e[0m
+"
+echo -e "
+\e[91mYouTube: https://www.youtube.com/@capi_nemoo\e[0m\n
+"
+
+
+echo -e "$msg_welcome"
+
+
 # Preguntar si desea ver la lista de paquetes o una descripción antes de instalar
 echo -e "$msg_options"
 echo -e "$msg_option1"
 echo -e "$msg_option2"
+read -p "$msg_choose_option" option
 
 # Mostrar lista de paquetes o descripciones según la opción seleccionada
-if [[ $option == "1" ]]; then
+if [[ $option =~ ^(y|yes|s|si|1)$ ]]; then
   echo "$msg_packages_list"
   for pkg in "${packages[@]}"; do
     echo "- $pkg"
   done
-elif [[ $option == "2" ]]; then
+else
   echo "$msg_packages_description"
   for pkg in "${packages[@]}"; do
     description="${package_descriptions[$pkg]}"
     echo -e "- \e[1m$pkg\e[0m: $description"
   done
-else
-  echo "$msg_invalid_option"
-  exit 1
-fi
-#
-
-# confirm_installation.sh
-source language_selection.sh
-
-# Confirmación antes de proceder
-if [[ $lang == "es" ]]; then
-  read -p "¿Quieres proceder con la instalación? (s/n): " confirm
-else
-  read -p "Do you want to proceed with the installation? (y/n): " confirm
 fi
 
-if [[ $confirm == "s" || $confirm == "S" || $confirm == "y" || $confirm == "Y" ]]; then
-  echo "Proceeding with installation..."
-else
-  if [[ $lang == "es" ]]; then
-    echo "Instalación cancelada."
+
+# install_packages.sh
+
+# Inicializar arrays para paquetes oficiales y de AUR
+official_packages=()
+aur_packages=()
+
+# Clasificar los paquetes
+for pkg in "${packages[@]}"; do
+  if pacman -Si "$pkg" > /dev/null 2>&1; then
+    official_packages+=("$pkg")
+  elif yay -Si "$pkg" > /dev/null 2>&1; then
+    aur_packages+=("$pkg")
   else
-    echo "Installation cancelled."
+    echo "⚠️  El paquete '$pkg' no se encontró en los repositorios oficiales ni en AUR."
   fi
-  exit 0
+done
+
+# Actualizar el sistema
+echo "$msg_updating_system"
+sudo pacman -Syu --noconfirm
+
+# Instalar paquetes desde los repositorios oficiales
+if [ ${#official_packages[@]} -ne 0 ]; then
+  echo "$msg_installing_official_packages"
+  sudo pacman -S --noconfirm "${official_packages[@]}"
 fi
 
-# Función para verificar si el paquete existe en los repositorios
-function check_package_exists() {
-  local package_name=$1
-  if pacman -Si "$package_name" > /dev/null 2>&1; then
-    return 0  # El paquete existe
-  else
-    return 1  # no existe
-  fi
-}
+# Instalar paquetes desde AUR usando yay
+if [ ${#aur_packages[@]} -ne 0 ]; then
+  echo "$msg_installing_aur_packages"
+  yay -S --noconfirm "${aur_packages[@]}"
+fi
 
 # Preguntar si el usuario desea agregar más paquetes
-read -p "Do you want to add more packages to the installation? (y/n): " add_more
+read -p "$msg_add_packages" add_more
+add_more=${add_more,,} # Convierte a minúsculas
 
-if [[ "$add_more" == "y" || "$add_more" == "Y" ]]; then
+if [[ "$add_more" =~ ^(y|yes|s|si|1)$ ]]; then
   while true; do
     # Pedir el nombre del paquete
-    read -p "Enter the package name you want to add: " package_name
+    read -p "$msg_enter_package" package_name
     
-    # Verificar si el paquete existe
-    if check_package_exists "$package_name"; then
-      echo "The package '$package_name' exists and will be installed."
-      sudo pacman -S --noconfirm "$package_name"
+    # Verificar si el paquete ya está en la lista
+    if [[ " ${packages[@]} " =~ " ${package_name} " ]]; then
+      printf "$msg_package_already_listed\n" "$package_name"
     else
-      echo "The package '$package_name' does not exist in the repositories."
+      # Verificar si el paquete existe
+      if pacman -Si "$package_name" > /dev/null 2>&1 || yay -Si "$package_name" > /dev/null 2>&1; then
+        printf "$msg_package_exists\n" "$package_name"
+        packages+=("$package_name")
+        # Opcional: Solicitar una descripción para el paquete
+        read -p "$msg_enter_description" package_desc
+        package_descriptions["$package_name"]="$package_desc"
+      else
+        printf "$msg_package_not_found\n" "$package_name"
+      fi
     fi
 
-    # Preguntar 
-    read -p "Do you want to add another package? (y/n): " add_another
-    if [[ "$add_another" != "y" && "$add_another" != "Y" ]]; then
+    # Preguntar si desea agregar otro paquete
+    read -p "$msg_add_another" add_another
+    add_another=${add_another,,} # Convierte a minúsculas
+    if [[ ! "$add_another" =~ ^(y|yes|s|si|1)$ ]]; then
+      echo "$msg_no_additional_packages"
       break
     fi
   done
 else
-  echo "No additional packages will be added."
-fi
-
-# install_packages.sh
-# Actualizar el sistema
-sudo pacman -Syu --noconfirm
-
-# Instalar paquetes desde los repos oficiales
-sudo pacman -S --noconfirm \
-  firefox \
-  kitty \
-  neovim \
-  fastfetch \
-  fzf \
-  feh \
-  rofi \
-  vlc \
-  discord \
-  polybar \
-  picom \
-  arandr \
-  wine \
-  keepassxc \
-  exa \
-  steam \
-  dolphin \
-  timeshift \
-  obs-studio \
-  tor \:
-  bat \
-  qbittorrent \
-  hyperfine \
-  nitrogen \
-  zsh
-
-# Instalar paquetes desde AUR usando yay
-yay -S --noconfirm \
-  obsidian \
-  factorio \
-  youtube-dl \
-  barrier \
-  oh-my-zsh \
-  lvim \
-  taskwarrior
-
-# set_default_shell.sh
-# Configurar zsh como shell predeterminada
-chsh -s $(which zsh)
-
-if [[ $lang == "es" ]]; then
-  echo "¡Instalación completada con éxito!"
-else
-  echo "Installation completed successfully!"
+  echo "$msg_no_additional_packages"
 fi
 
 

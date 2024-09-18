@@ -11,28 +11,29 @@ function check_package_exists() {
 }
 
 # Preguntar si el usuario desea agregar más paquetes
-read -p "Do you want to add more packages to the installation? (y/n): " add_more
+read -p "$msg_add_packages [1 = y]" add_more
 
-if [[ "$add_more" == "y" || "$add_more" == "Y" ]]; then
+if [[ "$add_more" == "1" ]]; then
   while true; do
     # Pedir el nombre del paquete
-    read -p "Enter the package name you want to add: " package_name
-    
+    read -p "$msg_enter_package" package_name
+
     # Verificar si el paquete existe
-    if check_package_exists "$package_name"; then
-      echo "The package '$package_name' exists and will be installed."
-      sudo pacman -S --noconfirm "$package_name"
+    if pacman -Si "$package_name" > /dev/null 2>&1 || yay -Si "$package_name" > /dev/null 2>&1; then
+      printf "$msg_package_exists\n" "$package_name"
+      # Instalar el paquete
+      sudo pacman -S --noconfirm "$package_name" || yay -S --noconfirm "$package_name"
     else
-      echo "The package '$package_name' does not exist in the repositories."
+      printf "$msg_package_not_found\n" "$package_name"
     fi
 
-    # Preguntar 
-    read -p "Do you want to add another package? (y/n): " add_another
-    if [[ "$add_another" != "y" && "$add_another" != "Y" ]]; then
+    # Preguntar si quiere agregar otro paquete
+    read -p "$msg_add_another" add_another
+    if [[ "$add_another" == "1" ]]; then
       break
     fi
   done
 else
-  echo "No additional packages will be added."
+  echo "$msg_no_additional_packages"
 fi
 
