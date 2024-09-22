@@ -2,7 +2,7 @@
 
 This repo is just for automating my personal system setup. If you're here looking for a guide or tutorial, you're in the wrong place. I use **Ansible**, **Rust**bash, and other tools to handle my environment across multiple machines, but this isn't meant for anyone but me.
 
-## Tools
+## Toolss
 
 - **Ansible**: Handles installation of my dotfiles and packages.
 - **Rust**: Some small custom utilities I wrote in Rust for fun.
