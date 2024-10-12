@@ -248,7 +248,6 @@ packages=(
   "wine"
   "keepassxc"
   "exa"
-  "steam"
   "dolphin"
   "timeshift"
   "obs-studio"
@@ -265,83 +264,94 @@ packages=(
 
 
 # Actualizar el sistema
-read -p "$Want_UPGRADE" siono
-if [[ "$siono" =~ ^(y|yes|s|si|1)$ ]]; then
+read -p "$Want_UPGRADE" confirmacion
+if [[ "$confirmacion" =~ ^(y|yes|s|si|1)$ ]]; then
   echo "$msg_updating_system"
   sudo pacman -Syu --noconfirm
 fi
 
 # Función para instalar paquetes
 install_packages() {
+  #Se pasa el arrat de packages a in for i in range
   for package in "${packages[@]}"; do
+    #por cada paquete en el array va a ....
     if pacman -Qi $package &> /dev/null; then
+      #verificar si pacman -Qi (que es un comando de pacman para checar si esta instalado
+      #arroja algun resultado, si lo hace entonces muestra el mensaje de abajo  
       echo "$package $itsinstalled"
     else
       echo "$installing $package..."
+      #si no es ta instalado lo instala, (muestra el mensaje de arriba y luego..
+      # checa con Ss el paquete a ver si esta en el repositorio
+      # si lo esta, lo instala sino sale 
       if pacman -Ss $package &> /dev/null; then
         sudo pacman -S --noconfirm $package
       else
+        # LUEGO DE verificar si esta o no (en este caso no estaria en pacman 
+        # asi que usa yay para instalarlo
         yay -S --noconfirm $package
       fi
     fi
   done
 }
 
-remove_packages() {
-  # Preguntar si el usuario quiere eliminar paquetes
-  read -p "$PROMPT_REMOVE_PACKAGE" confirm
-  if [[ "$confirm" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
-    # Pedir los nombres de los paquetes a eliminar, separados por espacios
-    read -p "$PROMPT_ENTER_PACKAGE" packages_to_remove_input
+
+# Esta funcion la remuevo pq me doy cuenta de que es mi script asi que yo se si lo que quiero esta ono xdxd
+#remove_packages() {
+#  # Preguntar si el usuario quiere eliminar paquetes
+#  read -p "$PROMPT_REMOVE_PACKAGE" confirm
+#  if [[ "$confirm" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
+#    # Pedir los nombres de los paquetes a eliminar, separados por espacios
+#    read -p "$PROMPT_ENTER_PACKAGE" packages_to_remove_input
     
     # Convertir la entrada en un array
-    IFS=' ' read -r -a packages_to_remove <<< "$packages_to_remove_input"
+ #   IFS=' ' read -r -a packages_to_remove <<< "$packages_to_remove_input"
     
     # Inicializar arrays para rastrear eliminaciones y no encontrados
-    removed_packages=()
-    not_found_packages=()
+  #  removed_packages=()
+   # not_found_packages=()
     
     # Iterar sobre cada paquete a eliminar
-    for package in "${packages_to_remove[@]}"; do
-      if [[ " ${packages[@]} " =~ " ${package} " ]]; then
-        removed_packages+=("$package")
-      else
-        not_found_packages+=("$package")
-      fi
-    done
+    #for package in "${packages_to_remove[@]}"; do
+     # if [[ " ${packages[@]} " =~ " ${package} " ]]; then
+      #  removed_packages+=("$package")
+    #  else
+     #   not_found_packages+=("$package")
+    #  fi
+    #done
     
     # Crear un nuevo array excluyendo los paquetes eliminados
-    new_packages=()
-    for package in "${packages[@]}"; do
-      if [[ ! " ${removed_packages[@]} " =~ " ${package} " ]]; then
-        new_packages+=("$package")
-      fi
-    done
+   # new_packages=()
+    #for package in "${packages[@]}"; do
+     # if [[ ! " ${removed_packages[@]} " =~ " ${package} " ]]; then
+      #  new_packages+=("$package")
+  #    fi
+  #  done
     
     # Actualizar el array original con los paquetes restantes
-    packages=("${new_packages[@]}")
+   # packages=("${new_packages[@]}")
     
-    # Informar al usuario sobre los paquetes eliminados
-    if [ ${#removed_packages[@]} -gt 0 ]; then
-      printf "$PROMPT_PACKAGE_REMOVED\n" "${removed_packages[@]}"
-    fi
-    
-    # Informar al usuario sobre los paquetes no encontrados
-    if [ ${#not_found_packages[@]} -gt 0 ]; then
-      printf "$PROMPT_PACKAGE_NOT_FOUND\n" "${not_found_packages[@]}"
-    fi
-    
-    # Preguntar si desea ver los paquetes restantes
-    read -p "$PROMPT_PACKAGES_REMAINING [y/n]: " confirm_remaining
-   
-    if [[ "$confirm_remaining" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
-      echo "$PROMPT_PACKAGES_REMAINING ${packages[@]}"
-    fi
-    
-  else
-    echo "$PROMPT_NO_PACKAGE_REMOVED"
-  fi
-}
+## Informar al usuario sobre los paquetes eliminados
+#    if [ ${#removed_packages[@]} -gt 0 ]; then
+#      printf "$PROMPT_PACKAGE_REMOVED\n" "${removed_packages[@]}"
+#    fi
+#    
+#    # Informar al usuario sobre los paquetes no encontrados
+#    if [ ${#not_found_packages[@]} -gt 0 ]; then
+#      printf "$PROMPT_PACKAGE_NOT_FOUND\n" "${not_found_packages[@]}"
+#    fi
+#    
+#    # Preguntar si desea ver los paquetes restantes
+#    read -p "$PROMPT_PACKAGES_REMAINING [y/n]: " confirm_remaining
+#   
+#    if [[ "$confirm_remaining" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
+#      echo "$PROMPT_PACKAGES_REMAINING ${packages[@]}"
+#    fi
+#    
+#  else
+ #   echo "$PROMPT_NO_PACKAGE_REMOVED"
+#  fi
+#}
 
 
 
@@ -365,8 +375,6 @@ else
   done
 fi
 
-# Llamar a la fun ción
-remove_packages
 
 # Llamar a la función
 install_packages
@@ -374,7 +382,6 @@ install_packages
 # Inicializar arrays para paquetes oficiales y de AUR
 official_packages=()
 aur_packages=()
-custom_packages=()
 
 ###
 # Clasificar los paquetes
