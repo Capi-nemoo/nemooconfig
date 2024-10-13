@@ -1,6 +1,10 @@
 # nemooconfig
 
-[[giphy.mp4]]
+
+https://github.com/user-attachments/assets/fcc2b7a5-5781-4344-89aa-57f1025129db
+
+
+
 
 Nemooconfig is a Bash script designed to automate the installation of all the applications I use daily on my Arch Linux machines (btw). It’s built with flexibility in mind, allowing admins to filter out packages they don't need and even add their own. It also supports multiple languages, including English and Spanish.
 
