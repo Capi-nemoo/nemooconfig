@@ -1,30 +1,43 @@
-# Dotfiles Automation
+# nemooconfig
 
-This repo is just for automating my personal system setup. If you're here looking for a guide or tutorial, you're in the wrong place. I use **Ansible**, **Rust**bash, and other tools to handle my environment across multiple machines, but this isn't meant for anyone but me.
+[[giphy.mp4]]
 
-## Toolss
+Nemooconfig is a Bash script designed to automate the installation of all the applications I use daily on my Arch Linux machines (btw). It’s built with flexibility in mind, allowing admins to filter out packages they don't need and even add their own. It also supports multiple languages, including English and Spanish.
 
-- **Ansible**: Handles installation of my dotfiles and packages.
-- **Rust**: Some small custom utilities I wrote in Rust for fun.
-- **Bash scripts**: Miscellaneous scripts for system tweaks.
-- **QMK**: My custom keyboard firmware setup.
+## Features
+
+- **Package Filtering**: Choose only the packages you need and skip those you don't.
+- **Customization**: Easily add your own packages 
+- **Multilanguage Support**: Available in English and Spanish.
+- **Ease of Use**: Just run the script and let everything install automatically.
+
+## Requirements
+
+- Arch Linux (btw)
+- Internet connection
 
 ## Installation
 
-If you really want to, you can run this on your system, but I don't recommend it. You'll probably need to adjust a bunch of things to fit your setup.
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/yourusername/nemooconfig.git
+   ```
+2. Navigate to the cloned directory:
+   ```bash
+   cd nemooconfig
+   ```
+3. Make the script executable:
+   ```bash
+   chmod +x nemooconfig.sh
+   ```
+4. Run the script:
+   ```bash
+   ./nemooconfig.sh
+   ```
 
-```bash
+## Contributions
 
-ansible-playbook -i inventory.yml playbook.yml --ask-become-pass
-```
+Contributions are welcome! If you have improvements or ideas, feel free to open a pull request or an issue.
 
-## What It Does
+---
 
-- Installs my dotfiles from GitHub.
-- Sets up a bunch of random stuff like **zsh**, **Vim**, and my **Rust** utilities.
-- Configures some tools like **QMK** for my keyboard firmware.
-- Updates and upgrades everything without asking questions.
-
-## Warning
-
-This is built for **my** setup. If you try to use it as-is, it might break something on your end. Feel free to explore it, but don’t expect it to work out of the box.
