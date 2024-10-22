@@ -34,7 +34,6 @@ repos=(
   "git@github.com:Capi-nemoo/DotNetwork.xyz.git"
   "git@github.com:Capi-nemoo/HiLetgo-3.5-TFT-Easy-Tutorial.git"
   "git@github.com:Capi-nemoo/Texas-Tech-app.git"
-  "git@github.com:Capi-nemoo/SynthNet-Project-University.git"
   "git@github.com:Capi-nemoo/easyboot.xyz.git"
   "git@github.com:Capi-nemoo/myWeb.git"
   "git@github.com:Capi-nemoo/assembly.git"
