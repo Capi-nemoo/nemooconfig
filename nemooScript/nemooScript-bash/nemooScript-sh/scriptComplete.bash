@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # colors.sh
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
@@ -11,11 +10,10 @@ INDIGO='\033[0;35m'
 VIOLET='\033[0;35m'
 NC='\033[0m' # No Color
 
-
 # banner.sh
 # Mostrar "NEMOO" en colores de arcoíris
 show_ascii_art2() {
-echo -e "
+  echo -e "
 ${RED} _   _  ${ORANGE}______ ${YELLOW}__  __ ${GREEN} ____   ${BLUE}____  
 ${RED}| \ | |${ORANGE}|  ____|${YELLOW}  \/  |${GREEN}/ __ \ ${BLUE}/ __ \ 
 ${RED}|  \| |${ORANGE}| |__  ${YELLOW}| \  / |${GREEN}| | | |${BLUE}| | | |
@@ -27,23 +25,20 @@ ${NC}
 }
 
 show_ascii_art() {
-	
-echo -e "\e[1;31m      ___           ___           ___                                ___           ___           ___           ___           ___     \e[0m"
-echo -e "\e[1;32m     /\  \         /\  \         /\  \          ___                 /\__\         /\  \         /\__\         /\  \         /\  \    \e[0m"
-echo -e "\e[1;33m    /::\  \       /::\  \       /::\  \        /\  \               /::|  |       /::\  \       /::|  |       /::\  \       /::\  \   \e[0m"
-echo -e "\e[1;34m   /:/\:\  \     /:/\:\  \     /:/\:\  \       \:\  \             /:|:|  |      /:/\:\  \     /:|:|  |      /:/\:\  \     /:/\:\  \  \e[0m"
-echo -e "\e[1;35m  /:/  \:\  \   /::\~\:\  \   /::\~\:\  \      /::\__\           /:/|:|  |__   /::\~\:\  \   /:/|:|__|__   /:/  \:\  \   /:/  \:\  \ \e[0m"
-echo -e "\e[1;36m /:/__/ \:\__\ /:/\:\ \:\__\ /:/\:\ \:\__\  __/:/\/__/          /:/ |:| /\__\ /:/\:\ \:\__\ /:/ |::::\__\ /:/__/ \:\__\ /:/__/ \:\__\\e[0m"
-echo -e "\e[1;31m \:\  \  \/__/ \/__\:\/:/  / \/__\:\/:/  / /\/:/  /             \/__|:|/:/  / \:\~\:\ \/__/ \/__/~~/:/  / \:\  \ /:/  / \:\  \ /:/  /\e[0m"
-echo -e "\e[1;32m  \:\  \            \::/  /       \::/  /  \::/__/                  |:/:/  /   \:\ \:\__\         /:/  /   \:\  /:/  /   \:\  /:/  / \e[0m"
-echo -e "\e[1;33m   \:\  \           /:/  /         \/__/    \:\__\                  |::/  /     \:\ \/__/        /:/  /     \:\/:/  /     \:\/:/  /  \e[0m"
-echo -e "\e[1;34m    \:\__\         /:/  /                    \/__/                  /:/  /       \:\__\         /:/  /       \::/  /       \::/  /   \e[0m"
-echo -e "\e[1;35m     \/__/         \/__/                                            \/__/         \/__/         \/__/         \/__/         \/__/    \e[0m"
 
+  echo -e "\e[1;31m      ___           ___           ___                                ___           ___           ___           ___           ___     \e[0m"
+  echo -e "\e[1;32m     /\  \         /\  \         /\  \          ___                 /\__\         /\  \         /\__\         /\  \         /\  \    \e[0m"
+  echo -e "\e[1;33m    /::\  \       /::\  \       /::\  \        /\  \               /::|  |       /::\  \       /::|  |       /::\  \       /::\  \   \e[0m"
+  echo -e "\e[1;34m   /:/\:\  \     /:/\:\  \     /:/\:\  \       \:\  \             /:|:|  |      /:/\:\  \     /:|:|  |      /:/\:\  \     /:/\:\  \  \e[0m"
+  echo -e "\e[1;35m  /:/  \:\  \   /::\~\:\  \   /::\~\:\  \      /::\__\           /:/|:|  |__   /::\~\:\  \   /:/|:|__|__   /:/  \:\  \   /:/  \:\  \ \e[0m"
+  echo -e "\e[1;36m /:/__/ \:\__\ /:/\:\ \:\__\ /:/\:\ \:\__\  __/:/\/__/          /:/ |:| /\__\ /:/\:\ \:\__\ /:/ |::::\__\ /:/__/ \:\__\ /:/__/ \:\__\\e[0m"
+  echo -e "\e[1;31m \:\  \  \/__/ \/__\:\/:/  / \/__\:\/:/  / /\/:/  /             \/__|:|/:/  / \:\~\:\ \/__/ \/__/~~/:/  / \:\  \ /:/  / \:\  \ /:/  /\e[0m"
+  echo -e "\e[1;32m  \:\  \            \::/  /       \::/  /  \::/__/                  |:/:/  /   \:\ \:\__\         /:/  /   \:\  /:/  /   \:\  /:/  / \e[0m"
+  echo -e "\e[1;33m   \:\  \           /:/  /         \/__/    \:\__\                  |::/  /     \:\ \/__/        /:/  /     \:\/:/  /     \:\/:/  /  \e[0m"
+  echo -e "\e[1;34m    \:\__\         /:/  /                    \/__/                  /:/  /       \:\__\         /:/  /       \::/  /       \::/  /   \e[0m"
+  echo -e "\e[1;35m     \/__/         \/__/                                            \/__/         \/__/         \/__/         \/__/         \/__/    \e[0m"
 
 }
-
-
 
 show_ascii_art
 
@@ -58,7 +53,7 @@ Select language / Selecciona idioma (en/es):
 # Definir mensajes según el idioma seleccionado
 if [[ "$lang" == "es" ]]; then
   # Mensajes en Español
-   # Mensajes en Español
+  # Mensajes en Español
   msg_welcome="¡Bienvenido al instalador!"
   msg_select_language="Selecciona idioma (es/en): "
   msg_options="Opciones:"
@@ -88,23 +83,23 @@ if [[ "$lang" == "es" ]]; then
   msg_symlink_created="Enlace simbólico creado: %s -> %s"
   msg_dotfiles_complete="¡Instalación de dotfiles y configuración de enlaces simbólicos completa! 🎉"
   msg_invalid_option="error4"
-    msg_package_already_listed="El paquete '%s' ya está en la lista de instalación."
+  msg_package_already_listed="El paquete '%s' ya está en la lista de instalación."
   msg_enter_description="Ingresa una descripción para el paquete:"
-    msg_updating_system="Actualizando el sistema..."
+  msg_updating_system="Actualizando el sistema..."
   msg_installing_official_packages="Instalando paquetes desde los repositorios oficiales..."
   msg_installing_aur_packages="Instalando paquetes desde AUR..."
   msg_proceeding_installation="Procediendo con la instalación..."
   PROMPT_PACKAGES_AVAILABLE="Paquetes disponibles:"
-PROMPT_REMOVE_PACKAGE="¿Deseas eliminar algún paquete? [y/n] "
-PROMPT_ENTER_PACKAGE="Escribe el nombre de todos los paquetes que deseas eliminar, una vez que presiones enter los paquetes restantes se instalarán"
-PROMPT_PACKAGE_REMOVED="%s ha sido eliminado del listado."
-PROMPT_PACKAGE_NOT_FOUND="El paquete '%s' no está en la lista."
-PROMPT_PACKAGES_REMAINING="Deseas ver los paquetes restantes? [1 = y]:"
-confirm_remaining="¿Deseas ver los paquetes restantes? [1 = y]: "
-PROMPT_NO_PACKAGE_REMOVED="No se ha eliminado ningún paquete."
-Want_UPGRADE="¿Quieres actualizar el sistema? [y/n]: "
-itsinstalled="ya está instalado"
-installing="Instalando"
+  PROMPT_REMOVE_PACKAGE="¿Deseas eliminar algún paquete? [y/n] "
+  PROMPT_ENTER_PACKAGE="Escribe el nombre de todos los paquetes que deseas eliminar, una vez que presiones enter los paquetes restantes se instalarán"
+  PROMPT_PACKAGE_REMOVED="%s ha sido eliminado del listado."
+  PROMPT_PACKAGE_NOT_FOUND="El paquete '%s' no está en la lista."
+  PROMPT_PACKAGES_REMAINING="Deseas ver los paquetes restantes? [1 = y]:"
+  confirm_remaining="¿Deseas ver los paquetes restantes? [1 = y]: "
+  PROMPT_NO_PACKAGE_REMOVED="No se ha eliminado ningún paquete."
+  Want_UPGRADE="¿Quieres actualizar el sistema? [y/n]: "
+  itsinstalled="ya está instalado"
+  installing="Instalando"
 
   # Descripciones de paquetes en Español
   declare -A package_descriptions=(
@@ -145,7 +140,7 @@ installing="Instalando"
 
 else
   # Messages in English
-    # Messages in English
+  # Messages in English
   msg_welcome="Welcome to the installer!"
   msg_select_language="Select language (en/es): "
   msg_options="Options:"
@@ -176,22 +171,22 @@ else
   msg_dotfiles_complete="Dotfiles installation and symlinks setup complete! 🎉"
   msg_invalid_option="error4"
   confirm_remaining="Do you want to see the remaining packages? [1 = y]: "
-    msg_package_already_listed="The package '%s' is already in the installation list."
+  msg_package_already_listed="The package '%s' is already in the installation list."
   msg_enter_description="Enter a description for the package:"
-    msg_updating_system="Updating the system..."
+  msg_updating_system="Updating the system..."
   msg_installing_official_packages="Installing packages from official repositories..."
   msg_installing_aur_packages="Installing packages from AUR..."
   msg_proceeding_installation="Proceeding with installation..."
   PROMPT_PACKAGES_AVAILABLE="Available packages:"
-PROMPT_REMOVE_PACKAGE="Do you want to remove any package? [y/n] "
-PROMPT_ENTER_PACKAGE="Enter the name of ALL the packages you want to remove, once you press enter the remaining packages will install"
-PROMPT_PACKAGE_REMOVED="%s has been removed from the list."
-PROMPT_PACKAGE_NOT_FOUND="The package '%s' is not in the list."
-PROMPT_PACKAGES_REMAINING="Remaining packages:"
-PROMPT_NO_PACKAGE_REMOVED="No package has been removed."
-Want_UPGRADE="Do you want to upgrade the system? [y/n]"
-itsinstalled="is already installed"
-installing="Installing"
+  PROMPT_REMOVE_PACKAGE="Do you want to remove any package? [y/n] "
+  PROMPT_ENTER_PACKAGE="Enter the name of ALL the packages you want to remove, once you press enter the remaining packages will install"
+  PROMPT_PACKAGE_REMOVED="%s has been removed from the list."
+  PROMPT_PACKAGE_NOT_FOUND="The package '%s' is not in the list."
+  PROMPT_PACKAGES_REMAINING="Remaining packages:"
+  PROMPT_NO_PACKAGE_REMOVED="No package has been removed."
+  Want_UPGRADE="Do you want to upgrade the system? [y/n]"
+  itsinstalled="is already installed"
+  installing="Installing"
 
   # Package descriptions in English
   declare -A package_descriptions=(
@@ -248,7 +243,6 @@ packages=(
   "wine"
   "keepassxc"
   "exa"
-  "steam"
   "dolphin"
   "timeshift"
   "obs-studio"
@@ -263,87 +257,50 @@ packages=(
   "zsh"
 )
 
+dotfiles_folders() {
+  mkdir -p ~/.dotfiles
+  cowsay -f hellokitty folder "dotfiles created"
+  mkdir -p ~/.dotfiles/alacritty
+  mkdir -p ~/.dotfiles/i3
+  mkdir -p ~/.dotfiles/picom
+  mkdir -p ~/.dotfiles/zsh
+  mkdir -p ~/.dotfiles/starship
+  mkdir -p ~/.dotfiles/polybar
+  mkdir -p ~/.dotfiles/
+  mkdir -p ~/.dotfiles/
+}
 
 # Actualizar el sistema
-read -p "$Want_UPGRADE" siono
-if [[ "$siono" =~ ^(y|yes|s|si|1)$ ]]; then
+read -p "$Want_UPGRADE" confirmacion
+if [[ "$confirmacion" =~ ^(y|yes|s|si|1)$ ]]; then
   echo "$msg_updating_system"
   sudo pacman -Syu --noconfirm
 fi
 
 # Función para instalar paquetes
 install_packages() {
+  #Se pasa el arrat de packages a in for i in range
   for package in "${packages[@]}"; do
-    if pacman -Qi $package &> /dev/null; then
+    #por cada paquete en el array va a ....
+    if pacman -Qi $package &>/dev/null; then
+      #verificar si pacman -Qi (que es un comando de pacman para checar si esta instalado
+      #arroja algun resultado, si lo hace entonces muestra el mensaje de abajo
       echo "$package $itsinstalled"
     else
       echo "$installing $package..."
-      if pacman -Ss $package &> /dev/null; then
+      #si no es ta instalado lo instala, (muestra el mensaje de arriba y luego..
+      # checa con Ss el paquete a ver si esta en el repositorio
+      # si lo esta, lo instala sino sale
+      if pacman -Ss $package &>/dev/null; then
         sudo pacman -S --noconfirm $package
       else
+        # LUEGO DE verificar si esta o no (en este caso no estaria en pacman
+        # asi que usa yay para instalarlo
         yay -S --noconfirm $package
       fi
     fi
   done
 }
-
-remove_packages() {
-  # Preguntar si el usuario quiere eliminar paquetes
-  read -p "$PROMPT_REMOVE_PACKAGE" confirm
-  if [[ "$confirm" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
-    # Pedir los nombres de los paquetes a eliminar, separados por espacios
-    read -p "$PROMPT_ENTER_PACKAGE" packages_to_remove_input
-    
-    # Convertir la entrada en un array
-    IFS=' ' read -r -a packages_to_remove <<< "$packages_to_remove_input"
-    
-    # Inicializar arrays para rastrear eliminaciones y no encontrados
-    removed_packages=()
-    not_found_packages=()
-    
-    # Iterar sobre cada paquete a eliminar
-    for package in "${packages_to_remove[@]}"; do
-      if [[ " ${packages[@]} " =~ " ${package} " ]]; then
-        removed_packages+=("$package")
-      else
-        not_found_packages+=("$package")
-      fi
-    done
-    
-    # Crear un nuevo array excluyendo los paquetes eliminados
-    new_packages=()
-    for package in "${packages[@]}"; do
-      if [[ ! " ${removed_packages[@]} " =~ " ${package} " ]]; then
-        new_packages+=("$package")
-      fi
-    done
-    
-    # Actualizar el array original con los paquetes restantes
-    packages=("${new_packages[@]}")
-    
-    # Informar al usuario sobre los paquetes eliminados
-    if [ ${#removed_packages[@]} -gt 0 ]; then
-      printf "$PROMPT_PACKAGE_REMOVED\n" "${removed_packages[@]}"
-    fi
-    
-    # Informar al usuario sobre los paquetes no encontrados
-    if [ ${#not_found_packages[@]} -gt 0 ]; then
-      printf "$PROMPT_PACKAGE_NOT_FOUND\n" "${not_found_packages[@]}"
-    fi
-    
-    # Preguntar si desea ver los paquetes restantes
-    read -p "$PROMPT_PACKAGES_REMAINING [y/n]: " confirm_remaining
-   
-    if [[ "$confirm_remaining" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
-      echo "$PROMPT_PACKAGES_REMAINING ${packages[@]}"
-    fi
-    
-  else
-    echo "$PROMPT_NO_PACKAGE_REMOVED"
-  fi
-}
-
-
 
 # Preguntar si desea ver la lista de paquetes o una descripción antes de instalar
 echo -e "$msg_options"
@@ -365,8 +322,61 @@ else
   done
 fi
 
-# Llamar a la fun ción
-remove_packages
+# Esta funcion la remuevo pq me doy cuenta de que es mi script asi que yo se si lo que quiero esta ono xdxd
+#remove_packages() {
+#  # Preguntar si el usuario quiere eliminar paquetes
+read -p "$PROMPT_REMOVE_PACKAGE" confirm
+if [[ "$confirm" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
+  # Pedir los nombres de los paquetes a eliminar, separados por espacios
+  read -p "$PROMPT_ENTER_PACKAGE" packages_to_remove_input
+
+  # Convertir la entrada en un array
+  IFS=' ' read -r -a packages_to_remove <<<"$packages_to_remove_input"
+
+  # Inicializar arrays para rastrear eliminaciones y no encontrados
+  removed_packages=()
+  not_found_packages=()
+
+  #   Iterar sobre cada paquete a eliminar
+  for package in "${packages_to_remove[@]}"; do
+    if [[ " ${packages[@]} " =~ " ${package} " ]]; then
+      removed_packages+=("$package")
+    else
+      not_found_packages+=("$package")
+    fi
+  done
+
+  # Crear un nuevo array excluyendo los paquetes eliminados
+  new_packages=()
+  for package in "${packages[@]}"; do
+    if [[ ! " ${removed_packages[@]} " =~ " ${package} " ]]; then
+      new_packages+=("$package")
+    fi
+  done
+
+  # Actualizar el array original con los paquetes restantes
+  packages=("${new_packages[@]}")
+
+  ## Informar al usuario sobre los paquetes eliminados
+  if [ ${#removed_packages[@]} -gt 0 ]; then
+    printf "$PROMPT_PACKAGE_REMOVED\n" "${removed_packages[@]}"
+  fi
+
+  # Informar al usuario sobre los paquetes no encontrados
+  if [ ${#not_found_packages[@]} -gt 0 ]; then
+    printf "$PROMPT_PACKAGE_NOT_FOUND\n" "${not_found_packages[@]}"
+  fi
+
+  # Preguntar si desea ver los paquetes restantes
+  read -p "$PROMPT_PACKAGES_REMAINING [y/n]: " confirm_remaining
+
+  if [[ "$confirm_remaining" =~ ^([Yy]|[Yy][Ee][Ss]|[Ss][Ii]|1)$ ]]; then
+    echo "$PROMPT_PACKAGES_REMAINING ${packages[@]}"
+  fi
+
+else
+  echo "$PROMPT_NO_PACKAGE_REMOVED"
+fi
 
 # Llamar a la función
 install_packages
@@ -374,33 +384,31 @@ install_packages
 # Inicializar arrays para paquetes oficiales y de AUR
 official_packages=()
 aur_packages=()
-custom_packages=()
 
 ###
 # Clasificar los paquetes
-# for pkg in "${custom_packages[@]}"; do
-#   if pacman -Si "$pkg" > /dev/null 2>&1; then
-#     official_packages+=("$pkg")
-#   elif yay -Si "$pkg" > /dev/null 2>&1; then
-#     aur_packages+=("$pkg")
-#   else
-#     echo "⚠️  El paquete '$pkg' no se encontró en los repositorios oficiales ni en AUR."
-#   fi
-# done
+for pkg in "${custom_packages[@]}"; do
+  if pacman -Si "$pkg" >/dev/null 2>&1; then
+    official_packages+=("$pkg")
+  elif yay -Si "$pkg" >/dev/null 2>&1; then
+    aur_packages+=("$pkg")
+  else
+    echo "⚠️  El paquete '$pkg' no se encontró en los repositorios oficiales ni en AUR."
+  fi
+done
 ###
 
-
 # Instalar paquetes desde los repositorios oficiales
-#if [ ${#official_packages[@]} -ne 0 ]; then
-#  echo "$msg_installing_official_packages"
-#  sudo pacman -S --noconfirm "${official_packages[@]}"
-#fi
+if [ ${#official_packages[@]} -ne 0 ]; then
+  echo "$msg_installing_official_packages"
+  sudo pacman -S --noconfirm "${official_packages[@]}"
+fi
 
 # Instalar paquetes desde AUR usando yay
-#if [ ${#aur_packages[@]} -ne 0 ]; then
-#  echo "$msg_installing_aur_packages"
-#  yay -S --noconfirm "${aur_packages[@]}"
-#fi
+if [ ${#aur_packages[@]} -ne 0 ]; then
+  echo "$msg_installing_aur_packages"
+  yay -S --noconfirm "${aur_packages[@]}"
+fi
 
 # Preguntar si el usuario desea agregar más paquetes
 read -p "$msg_add_packages" add_more
@@ -409,13 +417,13 @@ if [[ "$add_more" =~ ^(Y|y|yes|s|S|si|1)$ ]]; then
   while true; do
     # Pedir el nombre del paquete
     read -p "$msg_enter_package" package_name
-    
+
     # Verificar si el paquete ya está en la lista
     if [[ " ${packages[@]} " =~ " ${package_name} " ]]; then
       printf "$msg_package_already_listed\n" "$package_name"
     else
       # Verificar si el paquete existe
-      if pacman -Si "$package_name" > /dev/null 2>&1 || yay -Si "$package_name" > /dev/null 2>&1; then
+      if pacman -Si "$package_name" >/dev/null 2>&1 || yay -Si "$package_name" >/dev/null 2>&1; then
         printf "$msg_package_exists\n" "$package_name"
         packages+=("$package_name")
         # Opcional: Solicitar una descripción para el paquete
@@ -437,8 +445,3 @@ if [[ "$add_more" =~ ^(Y|y|yes|s|S|si|1)$ ]]; then
 else
   echo "$msg_no_additional_packages"
 fi
-
-
-
-
-
