@@ -52,7 +52,6 @@ alias ohmyzsh="nvim ~/.oh-my-zsh"
 # 5. Theme Configuration
 # =====================
 # Choose your Zsh theme (example: using Oh My Zsh)
-
 ZSH_THEME="robbyrussell"
 
 # =====================
@@ -61,6 +60,7 @@ ZSH_THEME="robbyrussell"
 # Load Oh My Zsh and plugins
 plugins=(git zsh-syntax-highlighting vi-mode zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
+
 # =====================
 # 7. Shell Functions
 # =====================
