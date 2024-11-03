@@ -37,6 +37,8 @@ Nemooconfig is a Bash script designed to automate the installation of all the ap
 
 ## Files Structure
 
+```
+
 mi-project-dot-engine/
 ├── .github/                      # GitHub-specific configurations (e.g., workflows)
 │   └── workflows/
@@ -110,6 +112,7 @@ mi-project-dot-engine/
 ├── .DS_Store                     # System-generated file
 └── README.md                     # Main project README with documentation
 
+```
 
 
 ---
