@@ -1,0 +1,17 @@
+/home/nemoolnvo/repos/active/nemooconfig
+/home/nemoolnvo/repos/active/myWeb
+/home/nemoolnvo/repos/active/myArch-btw-
+/home/nemoolnvo/repos/active/SofiaWebsite
+/home/nemoolnvo/repos/active/SitioPablo
+/home/nemoolnvo/repos/active/SolanaWorkshop
+/home/nemoolnvo/repos/active/Linux-ID-Generator
+/home/nemoolnvo/repos/inactive/easyboot.xyz
+/home/nemoolnvo/repos/inactive/dotEngine.xyz
+/home/nemoolnvo/repos/inactive/DotNetwork.xyz
+/home/nemoolnvo/repos/inactive/Website-shell
+/home/nemoolnvo/repos/inactive/SynthNet-Project
+/home/nemoolnvo/repos/inactive/TerminalShare
+/home/nemoolnvo/repos/inactive/Texas-Tech-app
+/home/nemoolnvo/repos/inactive/HiLetgo-3.5-TFT-Easy-Tutorial
+/home/nemoolnvo/repos/inactive/wiki1
+/home/nemoolnvo/repos/inactive/assembly
