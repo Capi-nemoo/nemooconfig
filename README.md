@@ -2,118 +2,79 @@
 
 https://github.com/user-attachments/assets/fcc2b7a5-5781-4344-89aa-57f1025129db
 
-Nemooconfig is a Bash script designed to automate the installation of all the applications I use daily on my Arch Linux machines (btw). It’s built with flexibility in mind, allowing admins to filter out packages they don't need and even add their own. It also supports multiple languages, including English and Spanish.
+# Arch Linux Setup Project Documentation
 
-## Features
+## Inventory
 
-- **Package Filtering**: Choose only the packages you need and skip those you don't.
-- **Customization**: Easily add your own packages 
-- **Multilanguage Support**: Available in English and Spanish.
-- **Ease of Use**: Just run the script and let everything install automatically.
-
-## Requirements
-
-- Arch Linux (btw)
-- Internet connection
-
-## Installation
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/yourusername/nemooconfig.git
-   ```
-2. Navigate to the cloned directory:
-   ```bash
-   cd nemooconfig
-   ```
-3. Make the script executable:
-   ```bash
-   chmod +x nemooconfig.sh
-   ```
-4. Run the script:
-   ```bash
-   ./nemooconfig.sh
-   ```
-
-## Files Structure
-
-```
-
-mi-project-dot-engine/
-├── .github/                      # GitHub-specific configurations (e.g., workflows)
-│   └── workflows/
-├── Dotfiles/                     # Dotfiles for various configurations
-│   └── myDotfiles/               # Personal configuration files and resources
-│       ├── 003.jpg
-│       ├── 003-2.png
-│       ├── config.jsonc
-│       ├── .zshrc
-│       ├── alacritty.toml
-│       └── nvim/                 # NeoVim configuration
-│           ├── init.lua
-│           └── plugin/
-│               ├── packer_compiled.lua
-│               └── lua/
-│                   ├── plugins.lua
-│                   └── lsp.lua
-│       ├── zsh/
-│           └── _.zshrc
-│       └── picom/
-│           └── picom.conf
-├── config/                       # Application-specific configurations
-│   ├── alacritty/
-│       └── alacritty.toml
-│   ├── nvim/                     # NeoVim configuration in system config
-│       ├── init.lua
-│       └── plugin/
-│           ├── packer_compiled.lua
-│           └── lua/
-│               ├── plugins.lua
-│               └── lsp.lua
-│   ├── lazygit/
-│       └── config.yml
-│   ├── dconf/
-│       └── user
-│   ├── starship.toml
-│   ├── btop/
-│       ├── btop.log
-│       └── btop.conf
-│   ├── i3/
-│       └── config
-│   ├── polybar/
-│       ├── launch.sh
-│       └── config.ini
-│   ├── fastfetch/
-│       ├── config.jsonc
-│       └── image.jpg
-│   └── picom/
-│       └── picom.conf
-├── nemooScript/                  # Scripts and tools
-│   ├── nemooScript-tui/
-│       └── rust-tui/
-│           ├── Cargo.toml
-│           └── src/
-│               └── main.rs
-│   ├── nemooScript-bash/
-│       ├── testCommands/
-│           └── find_file.bash
-│       ├── versions/
-│           ├── nemooScript_0.0.1_.bash
-│           └── nemooScript_0.0.2_.bash
-│       ├── nemooScript-sh/
-│           ├── downloadPackages.bash
-│           └── scriptComplete.bash
-│       └── gitscript.sh
-│   ├── nemooScript-py/
-│       └── nemooScript.py
-│   └── nemooScript-ansible/
-│       └── ansiblev01.ansible
-├── giphy.mp4                     # Media file or demo video
-├── .DS_Store                     # System-generated file
-└── README.md                     # Main project README with documentation
-
-```
-
+### `localhost.ini`
+This file defines the machine where Ansible will run. In this case, it's set up for local execution without SSH. If you want to expand, you can add configurations for remote servers or even dynamic inventories for virtual machines or containers.
 
 ---
+
+## Playbooks
+
+### `base.yml`
+Handles the initial setup of your Arch Linux system. This includes disk partitioning, installing the base system, and setting up the bootloader. You could expand this to include disk encryption (LUKS), RAID configurations, or other advanced disk setups.
+
+### `packages.yml`
+This playbook installs all the necessary tools and applications. It uses `pacman` for official packages and `yay` for AUR packages. You could enhance it with custom profiles like "developer", "gaming", or "minimal" to tailor the installed packages to different needs.
+
+### `dotfiles.yml`
+This playbook manages your dotfiles by cloning your repository and linking the necessary configuration files into your home directory. In the future, you could add features like automatic backups of existing files before overwriting them or support for different configuration profiles (e.g., work vs. personal).
+
+---
+
+## Roles
+
+### `roles/base/tasks.yml`
+This role focuses on the system’s base configuration. It sets up users, installs essential services like NetworkManager, and applies any required basic configurations. Expansion ideas include adding support for UEFI vs. Legacy BIOS setups or managing extra system services like SSH or Firewalld.
+
+### `roles/packages/tasks.yml`
+Installs all your specified packages. It separates installation between `pacman` packages and AUR packages using `yay`. You could make this more dynamic by including conditional installs based on the type of machine (e.g., laptop, desktop, server) or by adding optional features toggled through variables.
+
+### `roles/dotfiles/tasks.yml`
+Handles your dotfiles. It clones your repository and creates symbolic links for configurations in `$HOME`. You could expand it to manage multiple repositories or provide automated backups of existing files before replacing them.
+
+---
+
+## Vars
+
+### `vars/common.yml`
+This file stores shared variables used across playbooks and roles. It includes settings like the username, lists of packages (`pacman` and `aur`), and any other reusable configurations. Future improvements could include adding regional settings (timezone, keyboard layout) or flags for optional installations.
+
+---
+
+## Root Files
+
+### `ansible.cfg`
+Defines how Ansible behaves. It specifies where to find roles, inventories, and how to handle privileges. This file could be expanded to support SSH configurations or other advanced inventory setups for remote execution.
+
+### `README.md`
+The main documentation for the project. It explains how to use the playbooks, install Ansible, and run the setup. You could expand this by adding troubleshooting tips, a guide for contributions, or explanations of the project’s structure.
+
+---
+
+## Expansion Ideas
+
+1. **Support for Multiple Systems**  
+   Add configurations for derivatives like Manjaro or EndeavourOS.
+
+2. **Automated GUI Setup**  
+   Include setups for graphical environments like GNOME or i3wm.
+
+3. **Custom Profiles**  
+   Create profiles like "developer", "gamer", or "server" to streamline installations.
+
+4. **Testing and Validation**  
+   Use tools like Molecule to test playbooks and ensure everything works as expected.
+
+5. **Backup Integration**  
+   Automate restoration of user data and configurations from backups.
+
+6. **Resource Optimization**  
+   Check available resources like disk space or memory and adjust the setup accordingly.
+
+---
+
+This setup keeps things modular, minimal, and ready for future improvements. If you have more ideas or specific needs, feel free to build on top of this! �
 
