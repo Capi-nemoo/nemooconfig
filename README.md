@@ -4,6 +4,30 @@ https://github.com/user-attachments/assets/fcc2b7a5-5781-4344-89aa-57f1025129db
 
 # Arch Linux Setup Project Documentation
 
+```bash 
+arch-linux-setup/
+├── inventory/
+│   ├── localhost.ini
+├── playbooks/
+│   ├── base.yml
+│   ├── packages.yml
+│   ├── dotfiles.yml
+├── roles/
+│   ├── base/
+│   │   ├── tasks.yml
+│   ├──packages/
+│   │   ├── tasks.yml
+│   └── dotfiles/
+│       ├── tasks.yml
+├── vars/
+│   ├── common.yml
+├── ansible.cfg
+├── README.md
+
+```
+
+
+
 ## Inventory
 
 ### `localhost.ini`
@@ -76,5 +100,69 @@ The main documentation for the project. It explains how to use the playbooks, in
 
 ---
 
-This setup keeps things modular, minimal, and ready for future improvements. If you have more ideas or specific needs, feel free to build on top of this! �
+# List of items each file should contain
+
+## inventory/localhost.ini
+- Define the local host
+- Reference `ansible_connection=local`
+
+## playbooks/base.yml
+- Reference `hosts: localhost`
+- Use `become: true` for privilege escalation
+- Include the `base` role
+- Use variables from `vars/common.yml` (no explanation, just reference them)
+- Main tasks for installing and configuring the base system (list tasks in YAML format)
+
+## playbooks/packages.yml
+- Reference `hosts: localhost`
+- Use `become: true` for privilege escalation
+- Include the `packages` role
+- Use variables for package lists (from `vars/common.yml`)
+- Main tasks for installing official repo packages and AUR packages
+
+## playbooks/dotfiles.yml
+- Reference `hosts: localhost`
+- Use `become: true` for privilege escalation
+- Include the `dotfiles` role
+- Use variables for the dotfiles repository (from `vars/common.yml`)
+- Tasks to clone the repository and create symbolic links
+
+## roles/base/tasks.yml
+- Tasks to partition the disk
+- Tasks to format the partitions
+- Tasks to mount the base system
+- Tasks to `pacstrap` the base system
+- Tasks to generate `fstab`
+- Tasks to configure timezone, locale, and hostname
+- Tasks to install the bootloader
+
+## roles/packages/tasks.yml
+- Tasks to update the package database
+- Tasks to install packages using pacman (from the list in `vars/common.yml`)
+- Tasks to install `yay`
+- Tasks to install AUR packages (from the list in `vars/common.yml`)
+
+## roles/dotfiles/tasks.yml
+- Tasks to clone the dotfiles repository (using variables from `vars/common.yml`)
+- Tasks to create symbolic links for dotfiles
+- Tasks to ensure correct permissions for config files
+
+## vars/common.yml
+- Variable for the final username
+- Variable for the list of pacman packages
+- Variable for the list of AUR packages
+- Variable for the dotfiles repository URL
+- Variable for timezone and locale
+
+## ansible.cfg
+- Basic Ansible settings
+- Path to roles
+- Define the inventory
+- Minimum recommended settings (privilege escalation, host_key_checking, etc.)
+
+## README.md
+- Short description of the project
+- Basic instructions to run playbooks
+- Prerequisites (having Ansible, live environment with internet)
+- References to files and roles
 
